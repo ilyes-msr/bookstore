@@ -44,3 +44,5 @@ Route::get('/publishers', [PublishersController::class, 'list'])->name('gallery.
 Route::get('/authors/search', [AuthorsController::class, 'search'])->name('authors.search');
 Route::get('/authors/{author}', [AuthorsController::class, 'result'])->name('gallery.authors.show');
 Route::get('/authors', [AuthorsController::class, 'list'])->name('gallery.authors.list');
+
+Route::view('/admin', 'theme.default');
