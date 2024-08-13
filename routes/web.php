@@ -13,8 +13,6 @@ use App\Http\Controllers\GalleryController;
 |
 */
 
-Route::get('/', [GalleryController::class, 'index'])->name('gallery.index');
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -24,3 +22,6 @@ Route::middleware([
         return view('layouts.main');
     })->name('dashboard');
 });
+
+Route::get('/', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/search', [GalleryController::class, 'search'])->name('search');

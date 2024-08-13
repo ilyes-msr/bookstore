@@ -13,8 +13,15 @@
 @section('content')
 <div class="container">
   <div class="row">
+    <form action="{{ route('search') }}" method="GET">
+        <div class="row d-flex justify-content-center">
+            <input type="text" class="col-3 mx-sm-3 mb-2" name="term" placeholder="ابحث عن كتاب...">
+            <button type="submit" class="col-1 btn btn-secondary bg-secondary mb-2">ابحث</button>
+        </div>
+    </form>
+</div>
+<hr>
     <h3 class="my-3">{{$title}}</h3>
-  </div>
   <div class="mt-50 mb-50">
     <div class="row">
         @if ($books->count())
