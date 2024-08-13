@@ -82,4 +82,27 @@ class PublishersController extends Controller
     {
         //
     }
+
+    public function list()
+    {
+        $publishers = Publisher::all()->sortBy('name');
+        $title = 'جميع الناشرين';
+        return view('publishers.index', compact('publishers', 'title'));
+    }
+
+    public function search(Request $request)
+    {
+        // dd($request);
+        $publishers = Publisher::where('name', 'like', '%' . $request->term . '%')->get();
+        $term = $request->term;
+        $title = 'البحث في الناشرين';
+        return view('publishers.index', compact('publishers', 'term', 'title'));
+    }
+
+    public function result(Publisher $publisher)
+    {
+        $books = $publisher->books()->paginate(12);
+        $title = 'الكتب من الناشر : ' . $publisher->name;
+        return view('gallery', compact('books', 'title'));
+    }
 }

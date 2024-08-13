@@ -14,7 +14,7 @@
 <div class="container">
   <div class="row">
     <form action="{{ route('search') }}" method="GET">
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center"> 
             <input type="text" class="col-3 mx-sm-3 mb-2" name="term" placeholder="ابحث عن كتاب...">
             <button type="submit" class="col-1 btn btn-secondary bg-secondary mb-2">ابحث</button>
         </div>
@@ -31,15 +31,15 @@
                         <div class="card mb-3">
                             <div>
                                 <div class="card-img-actions"> 
-                                    <a href="">
+                                    <a href="{{route('book.details', $book)}}">
                                         <img src="{{ asset('storage/' . $book->cover_image) }}" class="card-img img-fluid" width="96" height="350" alt=""> 
                                     </a>
                                 </div>
                             </div>
                             <div class="card-body bg-light text-center">
                                 <div class="mb-2">
-                                    <h6 class="font-weight-semibold card-title mb-2"> <a href="" class="text-default mb-0" data-abc="true">{{ $book->title }}</a> </h6> 
-                                    <a href="" class="text-muted" data-abc="true">
+                                    <h6 class="font-weight-semibold card-title mb-2"> <a href="{{route('book.details', $book)}}" class="text-default mb-0" data-abc="true">{{ $book->title }}</a> </h6> 
+                                    <a href="{{route('gallery.categories.show', $book->category)}}" class="text-muted" data-abc="true">
                                         @if ($book->category != NULL)
                                             {{ $book->category->name }}
                                         @endif

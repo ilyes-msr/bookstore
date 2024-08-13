@@ -7,16 +7,29 @@ use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $categories = Category::all();
+        $title = 'جميع التصنيفات';
+        return view('categories.index', compact('categories', 'title'));
     }
 
+    public function list()
+    {
+        $categories = Category::all();
+        $title = 'جميع التصنيفات';
+        return view('categories.index', compact('categories', 'title'));
+    }
+
+    public function search(Request $request)
+    {
+        // dd($request);
+        $categories = Category::where('name', 'like', '%' . $request->term . '%')->get();
+        $term = $request->term;
+        $title = 'البحث في التصنيفات';
+        return view('categories.index', compact('categories', 'term', 'title'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -81,5 +94,12 @@ class CategoriesController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    public function result(Category $category)
+    {
+        $books = $category->books()->paginate(12);
+        $title = 'الكتب من الصنف : ' . $category->name;
+        return view('gallery', compact('books', 'title'));
     }
 }

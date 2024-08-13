@@ -82,4 +82,27 @@ class AuthorsController extends Controller
     {
         //
     }
+
+    public function list()
+    {
+        $authors = Author::all()->sortBy('name');
+        $title = 'جميع المؤلفين';
+        return view('authors.index', compact('authors', 'title'));
+    }
+
+    public function search(Request $request)
+    {
+        // dd($request);
+        $authors = Author::where('name', 'like', '%' . $request->term . '%')->get();
+        $term = $request->term;
+        $title = 'البحث في المؤلفين';
+        return view('authors.index', compact('authors', 'term', 'title'));
+    }
+
+    public function result(Author $author)
+    {
+        $books = $author->books()->paginate(12);
+        $title = 'الكتب من المؤلف : ' . $author->name;
+        return view('gallery', compact('books', 'title'));
+    }
 }

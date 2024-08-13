@@ -36,13 +36,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a href="#" class="nav-link">التصنيفات <i class="fas fa-list"></i></a>
+              <a href="{{route('gallery.categories.list')}}" class="nav-link">التصنيفات <i class="fas fa-list"></i></a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">الناشرون <i class="fas fa-table"></i></a>
+              <a href="{{route('gallery.publishers.list')}}" class="nav-link">الناشرون <i class="fas fa-table"></i></a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">المؤلفون <i class="fas fa-pen"></i></a>
+              <a href="{{route('gallery.authors.list')}}" class="nav-link">المؤلفون <i class="fas fa-pen"></i></a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">مشترياتي <i class="fas fa-basket-shopping"></i></a>
