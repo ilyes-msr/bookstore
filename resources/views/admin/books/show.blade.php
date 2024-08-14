@@ -118,6 +118,12 @@
                     @endauth
 
                     <a class="btn btn-info btn-sm" href="{{route('books.edit', $book)}}"><i class="fa fa-edit"></i> تعديل</a> 
+
+                    <form method="POST" action="{{route('books.destroy', $book)}}" class="d-inline-block">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد؟')"><i class="fa fa-trash"></i> حذف</button> 
+                    </form>
                 </div>
 
   

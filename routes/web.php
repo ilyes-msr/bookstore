@@ -47,12 +47,15 @@ Route::get('/authors', [AuthorsController::class, 'list'])->name('gallery.author
 
 Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index');
 
-Route::get('/admin/books', [BooksController::class, 'index'])->name('books.index');
-Route::get('/admin/books/create', [BooksController::class, 'create'])->name('books.create');
-Route::post('/admin/books', [BooksController::class, 'store'])->name('books.store');
-Route::get('/admin/books/{book}', [BooksController::class, 'show'])->name('books.show');
-Route::get('/admin/books/{book}/edit', [BooksController::class, 'edit'])->name('books.edit');
-Route::patch('/admin/books/{book}', [BooksController::class, 'update'])->name('books.update');
+// Route::get('/admin/books', [BooksController::class, 'index'])->name('books.index');
+// Route::get('/admin/books/create', [BooksController::class, 'create'])->name('books.create');
+// Route::post('/admin/books', [BooksController::class, 'store'])->name('books.store');
+// Route::get('/admin/books/{book}', [BooksController::class, 'show'])->name('books.show');
+// Route::get('/admin/books/{book}/edit', [BooksController::class, 'edit'])->name('books.edit');
+// Route::patch('/admin/books/{book}', [BooksController::class, 'update'])->name('books.update');
+// Route::delete('/admin/books/{book}', [BooksController::class, 'destroy'])->name('books.delete');
+
+Route::resource('/admin/books', BooksController::class);
 
 Route::get('/infos', function () {
     return phpinfo();
