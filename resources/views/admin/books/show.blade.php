@@ -1,4 +1,12 @@
-@extends('layouts.main')
+@extends('theme.default')
+
+@section('head')
+
+@endsection
+
+@section('heading')
+تفاصيل الكتاب
+@endsection
 
 @section('content')
 <div class="container">
@@ -106,29 +114,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('script')
-    <script>
-        $('.rating-star').click(function() {
-            
-            var submitStars = $(this).attr('data-value');
-
-            $.ajax({
-                type: 'post',
-                url: {{ $book->id }} + '/rate',
-                data: {
-                    '_token': $('meta[name="csrf-token"]').attr('content'),
-                    'value' : submitStars
-                },
-                success: function() {
-                    location.reload();
-                },
-                error: function() {
-                    toastr.error('حدث خطأ ما')
-                },
-            });
-        });
-    </script>
-
 @endsection
