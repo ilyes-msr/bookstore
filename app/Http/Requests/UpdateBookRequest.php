@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateBookRequest extends FormRequest
+class UpdateBookRequest extends FormRequest
 {
 
     public function authorize()
@@ -15,15 +15,16 @@ class CreateBookRequest extends FormRequest
 
     public function rules()
     {
+        $bookId = $this->route('book');
         return [
             'title' => 'required|max:255',
-            'isbn' => ['required', 'alpha_num', Rule::unique('books', 'isbn')],
+            'number_of_pages' => 'required|integer',
+            'isbn' => ['required', 'alpha_num', Rule::unique('books', 'isbn')->ignore($bookId)],
             'category' => 'sometimes|exists:categories,id',
             'publisher' => 'sometimes|exists:publishers,id',
             'number_of_copies' => 'required|integer',
-            'number_of_pages' => 'required|integer',
             'price' => 'required|numeric',
-            'cover_image' => 'required|image|max:8192',
+            'cover_image' => 'image|max:8192',
             'authors' => 'required|array',
             'authors.*' => 'exists:authors,id',
         ];

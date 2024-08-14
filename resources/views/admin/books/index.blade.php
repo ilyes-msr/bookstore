@@ -43,7 +43,7 @@
                         <td>{{ $book->publisher != null ? $book->publisher->name : '' }}</td>
                         <td>{{ $book->price }}$</td>
                         <td>
-                            <a class="btn btn-info btn-sm" href="#"><i class="fa fa-edit"></i> تعديل</a> 
+                            <a class="btn btn-info btn-sm" href="{{route('books.edit', $book)}}"><i class="fa fa-edit"></i> تعديل</a> 
                             <form method="POST" action="#" class="d-inline-block">
                                 @method('delete')
                                 @csrf

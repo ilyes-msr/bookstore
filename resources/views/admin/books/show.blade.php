@@ -116,7 +116,12 @@
                             </div>
                         @endif
                     @endauth
+
+                    <a class="btn btn-info btn-sm" href="{{route('books.edit', $book)}}"><i class="fa fa-edit"></i> تعديل</a> 
                 </div>
+
+  
+
             </div>
         </div>
     </div>

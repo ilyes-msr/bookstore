@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Author;
 use Illuminate\Http\Request;
 use App\Traits\ImageUploadTrait;
+use Illuminate\Support\Facades\Storage;
 
 class BooksController extends Controller
 {
@@ -21,8 +23,6 @@ class BooksController extends Controller
     public function index()
     {
         $books = Book::latest()->get();
-
-
         return view('admin.books.index', compact('books'));
     }
 
@@ -84,7 +84,10 @@ class BooksController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        $authors = Author::all();
+        $publishers = Publisher::all();
+        $categories = Category::all();
+        return view('admin.books.edit', compact('authors', 'publishers', 'categories', 'book'));
     }
 
     /**
@@ -94,9 +97,31 @@ class BooksController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $validatedData = $request->validated();
+
+        // $photo = $request->file('cover_image');
+        // $path = $photo->store('images/covers', 'public');
+
+        $book->title = $validatedData['title'];
+        if ($request->has('cover_image')) {
+            Storage::disk('public')->delete($book->cover_image);
+            $book->cover_image = $this->uploadImage($request->cover_image);
+        }
+        $book->isbn = $validatedData['isbn'];
+        $book->number_of_pages = $validatedData['number_of_pages'];
+        $book->category_id = $validatedData['category'];
+        $book->publisher_id = $validatedData['publisher'];
+        $book->number_of_copies = $validatedData['number_of_copies'];
+        $book->price = $validatedData['price'];
+
+        $book->save();
+        $book->authors()->detach();
+        $book->authors()->attach($validatedData['authors']);
+
+        session()->flash('flash_message', 'تمّ تعديل الكتاب بنجاح');
+        return redirect()->route('books.show', $book);
     }
 
     /**
