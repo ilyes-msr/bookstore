@@ -11,7 +11,7 @@
 
 @section('content')
 <div class="container">
-
+  
   @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -21,7 +21,9 @@
         </ul>
     </div>
   @endif
-
+<div class="row">
+  <div class="col-10">
+    
   <form action="{{route('books.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
@@ -88,15 +90,23 @@
       <label for="price" class="form-label">السعر</label>
       <input type="text" class="form-control" id="price" placeholder="السعر" name="price" value="{{old('price')}}">
     </div>
-    <div class="mb-3">
+    <div class="mb-3 text-center">
+      
       <label for="cover_image" class="form-label">غلاف الكتاب</label>
-      <input class="form-control" type="file" id="cover_image" name="cover_image">
+      
+      <input class="form-control" type="file" id="cover_image" name="cover_image" accept="image/*" onchange="readCoverImage(this)">
+
+      <img src="img-fluid img-thumbnail" alt="" id="cover-image-thumb" style="max-width: 500px; max-height: 500px; margin-top: 10px">
+
     </div>
 
     <div class="mb-3">
       <button class="btn btn-primary" type="submit">إضافة</button>
     </div>
   </form>
+  
+</div>
+</div>
 </div>
 @endsection
 
@@ -106,5 +116,14 @@
     $(document).ready(function() {
       $('#authors').select2();
     });
+    function readCoverImage(input) {
+      if(input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          $('#cover-image-thumb').attr('src', e.target.result)
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
   </script>
 @endsection

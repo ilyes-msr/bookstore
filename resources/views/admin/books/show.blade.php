@@ -1,7 +1,14 @@
 @extends('theme.default')
 
 @section('head')
-
+    <style>
+        table {
+            table-layout: fixed
+        }
+        table tr th {
+            width: 30%;
+        }
+    </style>
 @endsection
 
 @section('heading')
