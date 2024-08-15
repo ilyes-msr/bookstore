@@ -7,17 +7,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PublishersController;
 use App\Http\Controllers\AuthorsController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\UsersController;
 
 Route::middleware([
     'auth:sanctum',
@@ -45,7 +35,6 @@ Route::get('/authors/search', [AuthorsController::class, 'search'])->name('autho
 Route::get('/authors/{author}', [AuthorsController::class, 'result'])->name('gallery.authors.show');
 Route::get('/authors', [AuthorsController::class, 'list'])->name('gallery.authors.list');
 
-Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index');
 
 // Route::get('/admin/books', [BooksController::class, 'index'])->name('books.index');
 // Route::get('/admin/books/create', [BooksController::class, 'create'])->name('books.create');
@@ -55,10 +44,14 @@ Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index');
 // Route::patch('/admin/books/{book}', [BooksController::class, 'update'])->name('books.update');
 // Route::delete('/admin/books/{book}', [BooksController::class, 'destroy'])->name('books.delete');
 
-Route::resource('/admin/books', BooksController::class);
-Route::resource('/admin/publishers', PublishersController::class);
-Route::resource('/admin/categories', CategoriesController::class);
-Route::resource('/admin/authors', AuthorsController::class);
+Route::prefix('/admin')->middleware('can:update-books')->group(function () {
+    Route::get('/', [AdminsController::class, 'index'])->name('admin.index');
+    Route::resource('/books', BooksController::class);
+    Route::resource('/publishers', PublishersController::class);
+    Route::resource('/categories', CategoriesController::class);
+    Route::resource('/authors', AuthorsController::class);
+    Route::resource('/users', UsersController::class)->middleware('can:update-users');
+});
 
 Route::get('/infos', function () {
     return phpinfo();
