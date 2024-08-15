@@ -56,6 +56,7 @@ Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index');
 // Route::delete('/admin/books/{book}', [BooksController::class, 'destroy'])->name('books.delete');
 
 Route::resource('/admin/books', BooksController::class);
+Route::resource('/admin/publishers', PublishersController::class);
 
 Route::get('/infos', function () {
     return phpinfo();

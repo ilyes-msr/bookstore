@@ -14,7 +14,8 @@ class PublishersController extends Controller
      */
     public function index()
     {
-        //
+        $publishers = Publisher::all();
+        return view('admin.publishers.index', compact('publishers'));
     }
 
     /**
@@ -24,7 +25,7 @@ class PublishersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.publishers.create');
     }
 
     /**
@@ -35,29 +36,28 @@ class PublishersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'nullable'
+        ]);
+
+        $publisher = new Publisher();
+        $publisher->name = $request->name;
+        $publisher->address = $request->address;
+        $publisher->save();
+
+        session()->flash('flash_message', 'تمت إضافة الناشر بنجاح');
+        return redirect()->route('publishers.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Publisher  $publisher
-     * @return \Illuminate\Http\Response
-     */
     public function show(Publisher $publisher)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Publisher  $publisher
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Publisher $publisher)
     {
-        //
+        return view('admin.publishers.edit', compact('publisher'));
     }
 
     /**
@@ -69,7 +69,17 @@ class PublishersController extends Controller
      */
     public function update(Request $request, Publisher $publisher)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'nullable'
+        ]);
+
+        $publisher->name = $request->name;
+        $publisher->address = $request->address;
+        $publisher->save();
+
+        session()->flash('flash_message', 'تمّ تعديل بيانات الناشر بنجاح');
+        return redirect()->route('publishers.index');
     }
 
     /**
@@ -80,7 +90,9 @@ class PublishersController extends Controller
      */
     public function destroy(Publisher $publisher)
     {
-        //
+        $publisher->delete();
+        session()->flash('flash_message', 'تمّ حذف الناشر');
+        return redirect()->route('publishers.index');
     }
 
     public function list()
