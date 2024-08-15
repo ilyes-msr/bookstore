@@ -50,10 +50,7 @@ class PublishersController extends Controller
         return redirect()->route('publishers.index');
     }
 
-    public function show(Publisher $publisher)
-    {
-        //
-    }
+    public function show(Publisher $publisher) {}
 
     public function edit(Publisher $publisher)
     {
