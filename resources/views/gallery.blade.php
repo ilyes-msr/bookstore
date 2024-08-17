@@ -49,7 +49,7 @@
                                 <div> 
                                     <span class="score">
                                         <div class="score-wrap">
-                                            <span class="stars-active" style="width:{{ 20 }}%">
+                                            <span class="stars-active" style="width:{{ $book->rate() * 20 }}%">
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>

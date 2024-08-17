@@ -14,7 +14,31 @@
                             <th>العنوان</th>
                             <td class="lead"><b>{{ $book->title }}</b></td>
                         </tr>
+                        <tr>
+                            <th>تقييم المستخدمين</th>
+                            <td>
+                                <span class="score">
+                                    <div class="score-wrap">
+                                        <span class="stars-active" style="width:{{ $book->rate() * 20 }}%">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="stars-inactive">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                </span>
 
+                                <span>عدد المقيمين {{$book->ratings()->count() }} مستخدم</span>
+                            </td>
+                        </tr>
 
 
                         @if ($book->isbn)
@@ -77,15 +101,15 @@
                     </table>
                     @auth
                         <h4 class="mb-3">قيّم هذا الكتاب<h4>
-                        @if (false)
+                        @if (true)
                             @if(auth()->user()->rated($book))
-                                <div class="rating">
-                                    <span class="rating-star {{ auth()->user()->bookRating($book)->value == 5 ? 'checked' : '' }}" data-value="5"></span>
-                                    <span class="rating-star {{ auth()->user()->bookRating($book)->value == 4 ? 'checked' : '' }}" data-value="4"></span>
-                                    <span class="rating-star {{ auth()->user()->bookRating($book)->value == 3 ? 'checked' : '' }}" data-value="3"></span>
-                                    <span class="rating-star {{ auth()->user()->bookRating($book)->value == 2 ? 'checked' : '' }}" data-value="2"></span>
-                                    <span class="rating-star {{ auth()->user()->bookRating($book)->value == 1 ? 'checked' : '' }}" data-value="1"></span>
-                                </div>
+<div class="rating">
+<span class="rating-star {{ auth()->user()->bookRating($book)->value == 5 ? 'checked' : '' }}" data-value="5"></span>
+<span class="rating-star {{ auth()->user()->bookRating($book)->value == 4 ? 'checked' : '' }}" data-value="4"></span>
+<span class="rating-star {{ auth()->user()->bookRating($book)->value == 3 ? 'checked' : '' }}" data-value="3"></span>
+<span class="rating-star {{ auth()->user()->bookRating($book)->value == 2 ? 'checked' : '' }}" data-value="2"></span>
+<span class="rating-star {{ auth()->user()->bookRating($book)->value == 1 ? 'checked' : '' }}" data-value="1"></span>
+</div>
                             @else
                                 <div class="rating">
                                     <span class="rating-star" data-value="5"></span>
