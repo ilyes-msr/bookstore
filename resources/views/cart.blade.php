@@ -81,21 +81,33 @@
       paypal.Buttons({
         // Sets up the transaction when a payment button is clicked
         createOrder: (data, actions) => {
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value: '77.44'
-                    }
-                }]
+            return fetch('/api/paypal/create-payment', {
+                method: 'POST', 
+                body: JSON.stringify({
+                    'userId' : "{{auth()->id()}}"
+                })
+            }).then(function(res) {
+                return res.json();
+            }).then(function(orderData) {
+                return orderData.id;
             })
         },
         // Finalize the transaction after payer approval
         onApprove: (data, actions) => {
-            return actions.order.capture().then(function(orderData) {
-                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                const transaction = orderData.purchase_units[0].payments.captures[0];
-                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for details`)
-            });
+            return fetch('/api/paypal/execute-payment', {
+                method: 'POST',
+                body: JSON.stringify({
+                    orderId: data.orderID,
+                    userId: "{{auth()->id()}}"
+                })
+            }).then(function(res) {
+                return res.json();
+            }).then(function(orderData) {
+                $('#success').slideDown(200);
+                $('.card-body').slideUp(0);
+                $('span.badge').text(0);
+
+            })
         }
       }).render('#paypal-button-container');
     </script>
