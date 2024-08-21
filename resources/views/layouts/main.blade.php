@@ -6,9 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="csrf-token" content="{{csrf_token()}}">
   <title>مكتبة حسوب</title>
-
-
-
   
   @vite(['resources/css/app.css'])
   {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
@@ -84,6 +81,10 @@
       content: '\f005';
       color: #ffca00;
     }
+    .bg-cart {
+      color: #fff;
+      background-color: #ffc107;
+    }
   </style>
   @yield('head')
 </head>
@@ -98,6 +99,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto">
+            @auth
+              <li class="nav-item">
+                <a href="{{route('cart.view')}}" class="nav-link">
+                  @if(Auth::user()->booksInCart()->count() > 0)
+                    <span class="badge bg-secondary">{{Auth::user()->booksInCart()->count()}}</span>
+                  @else
+                    <span class="bg bg-secondary">0</span>
+                  @endif
+                  العربة
+                  <i class="fas fa-shopping-cart"></i>
+                </a>
+              </li>
+            @endauth
             <li class="nav-item">
               <a href="{{route('gallery.categories.list')}}" class="nav-link">التصنيفات <i class="fas fa-list"></i></a>
             </li>

@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PublishersController;
 use App\Http\Controllers\AuthorsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CartController;
 
 Route::middleware([
     'auth:sanctum',
@@ -57,3 +58,8 @@ Route::prefix('/admin')->middleware('can:update-books')->group(function () {
 Route::get('/infos', function () {
     return phpinfo();
 });
+
+Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/removeOne/{book}', [CartController::class, 'removeOne'])->name('cart.remove_one');
+Route::post('/removeAll/{book}', [CartController::class, 'removeAll'])->name('cart.remove_all');
