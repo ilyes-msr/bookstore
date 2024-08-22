@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use App\Mail\OrderMail;
+use Illuminate\Support\Facades\Mail;
 
 class PurchaseController extends Controller
 {
@@ -17,6 +19,12 @@ class PurchaseController extends Controller
         $this->provider->setApiCredentials(config('paypal'));
         $token = $this->provider->getAccessToken();
         $this->provider->setAccessToken($token);
+    }
+
+    public function sendOrderConfirmationMail($order, $user)
+    {
+        Mail::to($user->email)->send(new OrderMail($order, $user));
+        // Mail::to('testreceiver@gmail.com')->send(new MyTestEmail($name));
     }
 
     public function createPayment(Request $request)
@@ -52,6 +60,8 @@ class PurchaseController extends Controller
         if ($result['status'] === 'COMPLETED') {
             $user = User::find($data['userId']);
             $books = $user->booksInCart;
+
+            $this->sendOrderConfirmationMail($books, auth()->user());
 
             foreach ($books as $book) {
                 $bookPrice = $book->price;
@@ -95,6 +105,7 @@ class PurchaseController extends Controller
         } catch (\Exception $exception) {
             return back()->with('حدث خطأ أثناء شراء المنتج، الرجاءالتأكّد من معلومات البطاقة', $exception->getMessage());
         }
+        $this->sendOrderConfirmationMail($books, auth()->user());
 
         foreach ($books as $book) {
             $bookPrice = $book->price;

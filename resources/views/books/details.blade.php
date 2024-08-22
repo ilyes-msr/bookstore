@@ -109,7 +109,7 @@
                     </table>
                     @auth
                         <h4 class="mb-3">قيّم هذا الكتاب<h4>
-                        @if (true)
+                        @if ($bookfind)
                             @if(auth()->user()->rated($book))
 <div class="rating">
 <span class="rating-star {{ auth()->user()->bookRating($book)->value == 5 ? 'checked' : '' }}" data-value="5"></span>
