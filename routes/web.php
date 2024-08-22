@@ -49,6 +49,7 @@ Route::get('/authors', [AuthorsController::class, 'list'])->name('gallery.author
 
 Route::prefix('/admin')->middleware('can:update-books')->group(function () {
     Route::get('/', [AdminsController::class, 'index'])->name('admin.index');
+    Route::get('/all-purchases', [AdminsController::class, 'allPurchases'])->name('admin.all-purchases');
     Route::resource('/books', BooksController::class);
     Route::resource('/publishers', PublishersController::class);
     Route::resource('/categories', CategoriesController::class);
@@ -68,3 +69,6 @@ Route::post('/removeAll/{book}', [CartController::class, 'removeAll'])->name('ca
 // credit card
 Route::get('/checkout', [PurchaseController::class, 'creditCheckout'])->name('credit.checkout');
 Route::post('/checkout', [PurchaseController::class, 'purchase'])->name('products.purchase');
+
+// my product
+Route::get('/mypurchases', [PurchaseController::class, 'myPurchases'])->name('my-purchases');

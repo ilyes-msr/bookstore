@@ -60,8 +60,8 @@
           <span>المستخدمون</span></a>
       </li>
 
-      <li class="nav-item {{ request()->is('admin/allproduct*') ? 'active' : '' }}">
-        <a class="nav-link text-right" href="#">
+      <li class="nav-item {{ request()->is('admin/all-purchases*') ? 'active' : '' }}">
+        <a class="nav-link text-right" href="{{route('admin.all-purchases')}}">
         <i class="fas fa-shopping-bag"></i>
           <span>المشتريات</span></a>
       </li>

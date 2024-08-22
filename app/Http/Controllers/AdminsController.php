@@ -19,4 +19,9 @@ class AdminsController extends Controller
 
         return view('admin.index', compact('number_of_books', 'number_of_categories', 'number_of_authors', 'number_of_publishers'));
     }
+
+    public function allPurchases()
+    {
+        return view('admin.all-purchases');
+    }
 }

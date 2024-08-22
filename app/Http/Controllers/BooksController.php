@@ -150,7 +150,7 @@ class BooksController extends Controller
     {
         $bookfind = 0;
         if (Auth::check()) {
-            $bookfind = auth()->user()->ratedpurches()->where('book_id', $book->id)->first();
+            $bookfind = auth()->user()->ratedPurchases()->where('book_id', $book->id)->first();
         }
         return view('books.details', compact('book', 'bookfind'));
     }
