@@ -8,6 +8,8 @@ use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class AdminsController extends Controller
 {
     public function index()
@@ -22,6 +24,15 @@ class AdminsController extends Controller
 
     public function allPurchases()
     {
-        return view('admin.all-purchases');
+
+        $allPurchases = DB::table('book_user')
+            ->join('users', 'users.id', '=', 'book_user.user_id')
+            ->join('books', 'books.id', '=', 'book_user.book_id')
+            ->select('book_user.*', 'users.name', 'books.title')
+            ->where('bought', 1)
+            ->get();
+
+        // dd($allPurchases);
+        return view('admin.all-purchases', compact('allPurchases'));
     }
 }
